@@ -1,3 +1,10 @@
+import { AtpAgent } from "@atproto/api";
+
+// Create a Bluesky Agent
+const agent = new AtpAgent({
+  service: "https://bsky.social",
+});
+
 export async function GET() {
   const theThingPosts = await fetchBlueskyPosts();
 
@@ -17,6 +24,13 @@ export async function GET() {
       mostPopularPost = post;
     }
   }
+
+  await agent.login({
+    identifier: process.env.BLUESKY_USERNAME!,
+    password: process.env.BLUESKY_PASSWORD!,
+  });
+
+  await agent.repost(mostPopularPost.uri, mostPopularPost.cid);
 
   return Response.json({ mostPopularPost });
 }
