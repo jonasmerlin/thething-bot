@@ -1,8 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/thethingbot/post",
-      "schedule": "0 * * * *"
-    }
-  ]
-}
